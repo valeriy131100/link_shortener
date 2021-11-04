@@ -43,10 +43,8 @@ def count_clicks(token, link):
     return response.json()['total_clicks']
 
 
-link_to_shorten = input('Input link to short: ')
-try:
-    bitlink = shorten_link(token, link_to_shorten)
-except requests.exceptions.HTTPError:
-    print('Что-то пошло не так')
+user_link = input('Введите ссылку: ')
+if is_bitlink(user_link):
+    print('Количество кликов по ссылке: ', count_clicks(token, user_link))
 else:
-    print(bitlink)
+    print('Битлинк: ', shorten_link(token, user_link))
