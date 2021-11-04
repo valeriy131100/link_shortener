@@ -21,7 +21,7 @@ $ source bin/activate
 $ pip install -r requirements.txt
 ```
 # Использование
-Положите в директорию link_shortener файл token.txt содержание строку с токеном https://bit.ly.
+Положите в директорию link_shortener файл token.txt содержащий строку с токеном https://bit.ly.
 
 Находясь в директории link_shortener исполните
 ```bash
