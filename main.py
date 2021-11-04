@@ -14,11 +14,15 @@ def shorten_link(token, url):
         'long_url': url
     }
     response = requests.post(shortener_url, json=json, headers=headers)
-    if response.ok:
-        return response.json()['id']
-    else:
-        return None
+
+    response.raise_for_status()
+    return response.json()['id']
 
 
 link_to_shorten = input('Input link to short: ')
-print('Битлинк', shorten_link(token, link_to_shorten))
+try:
+    bitlink = shorten_link(token, link_to_shorten)
+except requests.exceptions.HTTPError:
+    print('Что-то пошло не так')
+else:
+    print(bitlink)
