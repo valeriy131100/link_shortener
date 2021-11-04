@@ -1,8 +1,10 @@
 import requests
 from urllib.parse import urlparse
 
-with open('token.txt', 'r') as token_file:
-    token = token_file.readline()
+
+def get_token_from_file():
+    with open('token.txt', 'r') as token_file:
+        return token_file.readline()
 
 
 def is_bitlink(url):
@@ -44,18 +46,23 @@ def count_clicks(token, link):
 
 
 if __name__ == '__main__':
-    user_link = input('Введите ссылку: ')
-    if is_bitlink(user_link):
-        try:
-            click_count = count_clicks(token, user_link)
-        except requests.exceptions.HTTPError:
-            print('Что-то пошло не так')
-        else:
-            print('Количество кликов по ссылке:', click_count)
+    try:
+        token = get_token_from_file()
+    except FileNotFoundError:
+        print('Не найден файл токена. Пожалуйста, положите его в файл token.txt в директории программы')
     else:
-        try:
-            bitlink = count_clicks(token, user_link)
-        except requests.exceptions.HTTPError:
-            print('Что-то пошло не так')
+        user_link = input('Введите ссылку: ')
+        if is_bitlink(user_link):
+            try:
+                click_count = count_clicks(token, user_link)
+            except requests.exceptions.HTTPError:
+                print('Что-то пошло не так')
+            else:
+                print('Количество кликов по ссылке:', click_count)
         else:
-            print('Битлинк:', bitlink)
+            try:
+                bitlink = count_clicks(token, user_link)
+            except requests.exceptions.HTTPError:
+                print('Что-то пошло не так')
+            else:
+                print('Битлинк:', bitlink)
