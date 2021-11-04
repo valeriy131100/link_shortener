@@ -43,8 +43,9 @@ def count_clicks(token, link):
     return response.json()['total_clicks']
 
 
-user_link = input('Введите ссылку: ')
-if is_bitlink(user_link):
-    print('Количество кликов по ссылке: ', count_clicks(token, user_link))
-else:
-    print('Битлинк: ', shorten_link(token, user_link))
+if __name__ == '__main__':
+    user_link = input('Введите ссылку: ')
+    if is_bitlink(user_link):
+        print('Количество кликов по ссылке: ', count_clicks(token, user_link))
+    else:
+        print('Битлинк: ', shorten_link(token, user_link))
