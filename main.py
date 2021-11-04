@@ -5,6 +5,14 @@ with open('token.txt', 'r') as token_file:
     token = token_file.readline()
 
 
+def is_bitlink(url):
+    parsed_url = urlparse(url)
+    if parsed_url.netloc == 'bit.ly':
+        return True
+    else:
+        return False
+
+
 def shorten_link(token, url):
     headers = {
         'Authorization': f'Bearer {token}',
