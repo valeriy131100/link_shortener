@@ -46,6 +46,16 @@ def count_clicks(token, link):
 if __name__ == '__main__':
     user_link = input('Введите ссылку: ')
     if is_bitlink(user_link):
-        print('Количество кликов по ссылке: ', count_clicks(token, user_link))
+        try:
+            click_count = count_clicks(token, user_link)
+        except requests.exceptions.HTTPError:
+            print('Что-то пошло не так')
+        else:
+            print('Количество кликов по ссылке:', click_count)
     else:
-        print('Битлинк: ', shorten_link(token, user_link))
+        try:
+            bitlink = count_clicks(token, user_link)
+        except requests.exceptions.HTTPError:
+            print('Что-то пошло не так')
+        else:
+            print('Битлинк:', bitlink)
