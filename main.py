@@ -8,11 +8,7 @@ def get_token_from_file():
 
 
 def is_bitlink(url):
-    parsed_url = urlparse(url)
-    if parsed_url.netloc == 'bit.ly':
-        return True
-    else:
-        return False
+    return urlparse(url).netloc == 'bit.ly'
 
 
 def shorten_link(token, url):
@@ -52,17 +48,10 @@ if __name__ == '__main__':
         print('Не найден файл токена. Пожалуйста, положите его в файл token.txt в директории программы')
     else:
         user_link = input('Введите ссылку: ')
-        if is_bitlink(user_link):
-            try:
-                click_count = count_clicks(token, user_link)
-            except requests.exceptions.HTTPError:
-                print('Что-то пошло не так')
+        try:
+            if is_bitlink(user_link):
+                print(f'Количество кликов по ссылке: {count_clicks(token, user_link)}')
             else:
-                print('Количество кликов по ссылке:', click_count)
-        else:
-            try:
-                bitlink = count_clicks(token, user_link)
-            except requests.exceptions.HTTPError:
-                print('Что-то пошло не так')
-            else:
-                print('Битлинк:', bitlink)
+                print(f'Битлинк: {shorten_link(token, user_link)}')
+        except requests.exceptions.HTTPError:
+            print('Что-то пошло не так')
