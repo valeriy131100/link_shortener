@@ -4,8 +4,20 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 
 
-def is_bitlink(url):
-    return urlparse(url).netloc == 'bit.ly'
+def is_bitlink(token, url):
+    headers = {
+        'Authorization': f'Bearer {token}',
+        'Content-Type': 'application/json'
+    }
+    parsed_url = urlparse(url)
+    cleared_url = f'{parsed_url.netloc}{parsed_url.path}'
+    bitlink_info_url = f'https://api-ssl.bitly.com/v4/bitlinks/{cleared_url}'
+    response = requests.get(bitlink_info_url, headers=headers)
+
+    if response.ok:
+        return True
+    else:
+        return False
 
 
 def shorten_link(token, url):
@@ -43,7 +55,7 @@ if __name__ == '__main__':
     token = os.getenv('BITLY_TOKEN')
     user_link = input('Введите ссылку: ')
     try:
-        if is_bitlink(user_link):
+        if is_bitlink(token, user_link):
             print(f'Количество кликов по ссылке: {count_clicks(token, user_link)}')
         else:
             print(f'Битлинк: {shorten_link(token, user_link)}')
