@@ -32,7 +32,7 @@ def count_clicks(token, link):
         'Content-Type': 'application/json'
     }
     parsed_link = urlparse(link)
-    cleared_link = parsed_link.netloc + parsed_link.path
+    cleared_link = f'{parsed_link.netloc}{parsed_link.path}'
 
     counter_url = f'https://api-ssl.bitly.com/v4/bitlinks/{cleared_link}/clicks/summary'
     response = requests.get(counter_url, headers=headers)
