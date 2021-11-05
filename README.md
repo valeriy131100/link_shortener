@@ -23,28 +23,24 @@ $ pip install -r requirements.txt
 # Использование
 Заполните прилагающийся .env.exapmle файл и переименуйте его в .env или иным образом задайте переменную среды BITLY_TOKEN.
 
-Находясь в директории link_shortener исполните
+Находясь в директории link_shortener исполните main.py указав первым аргументом ссылку или битлинк
 ```bash
-$ bin/python main.py
+$ bin/python main.py [some_url_here]
 ```
 
-Программа попросит ввести ссылку
-```bash
-Введите ссылку: 
-```
 В случае, если ссылка не является битлинком, то программа создаст его
 ```bash
-Введите ссылку: https://google.com
+$ bin/python main.py https://google.com
 Битлинк: bit.ly/3nQjVCw
 ```
 Если ссылка является битлинком, то по ней вернется количество кликов за все время
 ```bash
-Введите ссылку: https://bit.ly/3nQjVCw
+$ bin/python main.py https://bit.ly/3nQjVCw
 Количество кликов по ссылке: 1
 ```
 В случае если со ссылкой что-то не так, то программа сообщит  об этом
 ```bash
-Введите ссылку: something_that_not_url
+$ bin/python main.py something_that_not_url
 Что-то пошло не так
 ```
 Будте внимательны, не забудьте указывать http:// или https:// в начале ссылки

@@ -1,4 +1,5 @@
 import requests
+import argparse
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlparse
@@ -50,7 +51,12 @@ def count_clicks(token, link):
 if __name__ == '__main__':
     load_dotenv()
     token = os.getenv('BITLY_TOKEN')
-    user_link = input('Введите ссылку: ')
+
+    parser = argparse.ArgumentParser(description='Сокращает url или показывает число переходов по битлинку')
+    parser.add_argument('link', help='ссылка или битлинк')
+    args = parser.parse_args()
+    user_link = args.link
+
     try:
         if is_bitlink(token, user_link):
             print(f'Количество кликов по ссылке: {count_clicks(token, user_link)}')
