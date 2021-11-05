@@ -1,10 +1,7 @@
 import requests
+import os
+from dotenv import load_dotenv
 from urllib.parse import urlparse
-
-
-def get_token_from_file():
-    with open('token.txt', 'r') as token_file:
-        return token_file.readline()
 
 
 def is_bitlink(url):
@@ -42,16 +39,13 @@ def count_clicks(token, link):
 
 
 if __name__ == '__main__':
+    load_dotenv()
+    token = os.getenv('BITLY_TOKEN')
+    user_link = input('Введите ссылку: ')
     try:
-        token = get_token_from_file()
-    except FileNotFoundError:
-        print('Не найден файл токена. Пожалуйста, положите его в файл token.txt в директории программы')
-    else:
-        user_link = input('Введите ссылку: ')
-        try:
-            if is_bitlink(user_link):
-                print(f'Количество кликов по ссылке: {count_clicks(token, user_link)}')
-            else:
-                print(f'Битлинк: {shorten_link(token, user_link)}')
-        except requests.exceptions.HTTPError:
-            print('Что-то пошло не так')
+        if is_bitlink(user_link):
+            print(f'Количество кликов по ссылке: {count_clicks(token, user_link)}')
+        else:
+            print(f'Битлинк: {shorten_link(token, user_link)}')
+    except requests.exceptions.HTTPError:
+        print('Что-то пошло не так')
